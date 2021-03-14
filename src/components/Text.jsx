@@ -10,6 +10,9 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.main,
     fontWeight: theme.fontWeights.normal,
   },
+  colorTextPrimary: {
+    color: theme.colors.textPrimary,
+  },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
   },
@@ -24,18 +27,31 @@ const styles = StyleSheet.create({
   },
   tabTitle: {
     fontSize: theme.fontSizes.heading,
-    margin: 15,
+    padding: theme.padding.ml,
+  },
+  alignCenter: {
+    textAlign: 'center',
   },
 });
 
-const Text = ({ color, type, fontSize, fontWeight, style, ...props }) => {
+const Text = ({
+  color,
+  textAlign,
+  type,
+  fontSize,
+  fontWeight,
+  style,
+  ...props
+}) => {
   const textStyle = [
     styles.text,
     type === 'tabTitle' && styles.tabTitle,
     color === 'textSecondary' && styles.colorTextSecondary,
+    color === 'textPrimary' && styles.colorTextPrimary,
     color === 'primary' && styles.colorPrimary,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
+    textAlign === 'center' && styles.alignCenter,
     style,
   ];
 
