@@ -4,7 +4,7 @@ import Text from './Text';
 
 const styles = StyleSheet.create({
   textTop: {
-    marginBottom: 10,
+    marginBottom: 5,
   },
 });
 
