@@ -1,12 +1,12 @@
 import React from 'react';
-import { Pressable } from 'react-native';
+import { Link } from 'react-router-native';
 import Text from './Text';
 
-const AppBarTab = () => {
+const AppBarTab = ({ title, to }) => {
   return (
-    <Pressable>
-      <Text type='tabTitle'>Repositories</Text>
-    </Pressable>
+    <Link to={to}>
+      <Text type='tabTitle'>{title}</Text>
+    </Link>
   );
 };
 
