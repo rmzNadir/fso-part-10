@@ -13,10 +13,18 @@ const styles = StyleSheet.create({
   buttonFocus: {
     borderColor: theme.colors.secondary,
   },
+  buttonError: {
+    borderColor: theme.colors.danger,
+  },
 });
 
 const TextInput = ({ style, error, focus, ...props }) => {
-  const textInputStyle = [styles.button, style, focus && styles.buttonFocus];
+  const textInputStyle = [
+    styles.button,
+    style,
+    focus && styles.buttonFocus,
+    error && styles.buttonError,
+  ];
 
   return (
     <NativeTextInput

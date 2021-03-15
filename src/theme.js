@@ -6,6 +6,9 @@ export const theme = {
     secondary: '#0CBEBD',
     MainBackground: '#1b1b1b',
     background: '#333333',
+    danger: '#eb445a',
+    warning: '#ffc409',
+    success: '#2dd36f',
   },
   padding: {
     s: 5,
