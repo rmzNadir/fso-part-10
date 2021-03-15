@@ -20,8 +20,9 @@ const styles = StyleSheet.create({
 const Main = () => {
   return (
     <View style={styles.container}>
+      <StatusBar style='light' />
       <AppBar />
-      <StatusBar style='auto' />
+
       <Switch>
         <Route exact path='/'>
           <RepositoryList />
