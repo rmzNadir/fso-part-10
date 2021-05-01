@@ -3,11 +3,11 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
+import { useHistory } from 'react-router-native';
 
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
-import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 });
 
 const SignIn = () => {
+  const history = useHistory();
   const [signIn] = useSignIn();
-  const authStorage = new AuthStorage();
 
   const initialValues = {
     username: '',
@@ -41,8 +41,9 @@ const SignIn = () => {
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
-      await signIn({ username, password });
-      console.log('aT', await authStorage.getAccessToken());
+      const res = await signIn({ username, password });
+
+      res && history.push('/');
     } catch (e) {
       console.log(e);
     }
