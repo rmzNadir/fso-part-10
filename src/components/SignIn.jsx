@@ -7,6 +7,7 @@ import useSignIn from '../hooks/useSignIn';
 import Text from './Text';
 import FormikTextInput from './FormikTextInput';
 import theme from '../theme';
+import AuthStorage from '../utils/authStorage';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
 
 const SignIn = () => {
   const [signIn] = useSignIn();
+  const authStorage = new AuthStorage();
 
   const initialValues = {
     username: '',
@@ -39,8 +41,8 @@ const SignIn = () => {
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
-      const { data } = await signIn({ username, password });
-      console.log('data', data);
+      await signIn({ username, password });
+      console.log('aT', await authStorage.getAccessToken());
     } catch (e) {
       console.log(e);
     }
