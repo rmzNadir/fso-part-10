@@ -41,9 +41,9 @@ const SignIn = () => {
   const onSubmit = async (values) => {
     const { username, password } = values;
     try {
-      const res = await signIn({ username, password });
+      const accessToken = await signIn({ username, password });
 
-      res && history.push('/');
+      accessToken && history.push('/');
     } catch (e) {
       console.log(e);
     }
