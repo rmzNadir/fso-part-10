@@ -24,29 +24,15 @@ const styles = StyleSheet.create({
   },
 });
 
-const SignIn = () => {
-  const history = useHistory();
-  const [signIn] = useSignIn();
-
-  const initialValues = {
-    username: '',
-    password: '',
-  };
-
+export const SignInForm = ({ onSubmit }) => {
   const validationSchema = yup.object().shape({
     username: yup.string().required('Username is required!'),
     password: yup.string().required('Password is required!'),
   });
 
-  const onSubmit = async (values) => {
-    const { username, password } = values;
-    try {
-      const accessToken = await signIn({ username, password });
-
-      accessToken && history.push('/');
-    } catch (e) {
-      console.log(e);
-    }
+  const initialValues = {
+    username: '',
+    password: '',
   };
 
   return (
@@ -61,20 +47,44 @@ const SignIn = () => {
             name='username'
             placeholder='Username'
             wrapperStyle={styles.input}
+            testID='usernameField'
           />
           <FormikTextInput
             secureTextEntry
             name='password'
             placeholder='Password'
             wrapperStyle={styles.input}
+            testID='passwordField'
           />
-          <Pressable onPress={handleSubmit} style={styles.button}>
+          <Pressable
+            onPress={handleSubmit}
+            style={styles.button}
+            testID='submitButton'
+          >
             <Text>Sign in</Text>
           </Pressable>
         </View>
       )}
     </Formik>
   );
+};
+
+const SignIn = () => {
+  const history = useHistory();
+  const [signIn] = useSignIn();
+
+  const onSubmit = async (values) => {
+    const { username, password } = values;
+    try {
+      const accessToken = await signIn({ username, password });
+
+      accessToken && history.push('/');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  return <SignInForm onSubmit={onSubmit} />;
 };
 
 export default SignIn;
