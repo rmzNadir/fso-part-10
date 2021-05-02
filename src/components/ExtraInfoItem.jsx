@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Text from './Text';
+import NumberFormatter from '../utils/numberFormatter';
 
 const styles = StyleSheet.create({
   textTop: {
@@ -8,15 +9,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const ExtraInfoItem = ({ name, info, noCount }) => {
-  let formattedInfo = info;
-  !noCount && formattedInfo > 1000
-    ? (formattedInfo = (formattedInfo / 1000).toFixed(1) + 'k')
-    : formattedInfo;
+const ExtraInfoItem = ({ name, info, noCount, ...props }) => {
+  const content = noCount ? info : NumberFormatter(info);
+
   return (
-    <View>
+    <View {...props}>
       <Text textAlign='center' style={styles.textTop} fontWeight='bold'>
-        {formattedInfo}
+        {content}
       </Text>
       <Text textAlign='center'>{name}</Text>
     </View>

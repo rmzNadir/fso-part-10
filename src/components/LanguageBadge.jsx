@@ -12,9 +12,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const LanguageBadge = ({ language, style }) => {
+const LanguageBadge = ({ language, style, ...props }) => {
   const BadgeStyle = [styles.badge, style];
-  return <Text style={BadgeStyle}>{language}</Text>;
+  return (
+    <Text style={BadgeStyle} {...props}>
+      {language}
+    </Text>
+  );
 };
 
 export default LanguageBadge;
