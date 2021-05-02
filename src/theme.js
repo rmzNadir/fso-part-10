@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+
 export const theme = {
   colors: {
     textPrimary: '#EFEFEF',
@@ -12,6 +13,12 @@ export const theme = {
     success: '#2dd36f',
   },
   padding: {
+    s: 5,
+    m: 10,
+    ml: 15,
+    l: 20,
+  },
+  margin: {
     s: 5,
     m: 10,
     ml: 15,

@@ -48,7 +48,7 @@ const RepositoryItem = ({ item }) => {
     reviewCount,
     ratingAverage,
     ownerAvatarUrl,
-  } = item;
+  } = { ...item };
 
   return (
     <View style={styles.card}>

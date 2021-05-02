@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-native';
-import { TouchableWithoutFeedback } from 'react-native';
+import { TouchableHighlight } from 'react-native';
 import Text from './Text';
 
 const AppBarTab = ({ title, to, type, onPress }) => {
   switch (type) {
     case 'button':
       return (
-        <TouchableWithoutFeedback onPress={onPress}>
+        <TouchableHighlight onPress={onPress} underlayColor='#d73857'>
           <Text type='tabTitle'>{title}</Text>
-        </TouchableWithoutFeedback>
+        </TouchableHighlight>
       );
     default:
       return (
-        <Link to={to}>
+        <Link to={to} underlayColor='#d73857'>
           <Text type='tabTitle'>{title}</Text>
         </Link>
       );
