@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     borderRadius: theme.borderRadius.s,
     alignItems: 'center',
     justifyContent: 'center',
+    height: 60,
   },
   secondary: {
     backgroundColor: theme.colors.secondary,

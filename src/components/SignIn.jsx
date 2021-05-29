@@ -80,7 +80,7 @@ const SignIn = () => {
 
       accessToken && history.push('/');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   bottom: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'flex-start',
   },
   topInfo: {
     marginTop: 5,
