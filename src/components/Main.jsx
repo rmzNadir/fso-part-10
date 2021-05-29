@@ -7,6 +7,7 @@ import theme from '../theme';
 import AppBar from './AppBar';
 import RepositoryList from './RepositoryList';
 import SignIn from './SignIn';
+import SignUp from './SignUp';
 import Repository from './Repository';
 import NewReview from './NewReview';
 
@@ -31,6 +32,9 @@ const Main = () => {
         </Route>
         <Route exact path='/signIn'>
           <SignIn />
+        </Route>
+        <Route exact path='/signUp'>
+          <SignUp />
         </Route>
         <Route exact path='/reviews/new'>
           <NewReview />

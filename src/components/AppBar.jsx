@@ -46,6 +46,7 @@ const AppBar = () => {
         ) : (
           <AppBarTab title='Sign in' to='/signIn' />
         )}
+        {!authorizedUser && <AppBarTab title='Sign up' to='/signUp' />}
       </ScrollView>
     </View>
   );
