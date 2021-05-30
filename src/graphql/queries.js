@@ -49,7 +49,7 @@ export const AUTHORIZED_USER = gql`
     authorizedUser {
       id
       username
-      reviews(first: $first, after: $after) @include(if: $includeReviews) {
+      reviews(after: $after, first: $first) @include(if: $includeReviews) {
         totalCount
         edges {
           node {
@@ -60,6 +60,7 @@ export const AUTHORIZED_USER = gql`
             repository {
               ownerName
               name
+              id
             }
             user {
               id

@@ -21,7 +21,14 @@ const styles = StyleSheet.create({
   secondary: {
     backgroundColor: theme.colors.secondary,
   },
+  primary: {
+    backgroundColor: theme.colors.primary,
+  },
   textSecondary: {
+    color: theme.colors.textPrimary,
+    textAlign: 'center',
+  },
+  textPrimary: {
     color: theme.colors.textPrimary,
     textAlign: 'center',
   },
@@ -31,16 +38,22 @@ const Button = ({ children, type, style, textStyle, ...props }) => {
   const buttonStyle = [
     styles.button,
     type && type === 'secondary' && styles.secondary,
+    type && type === 'primary' && styles.primary,
     style,
   ];
 
   const childrenStyle = [
     textStyle,
     type && type === 'secondary' && styles.textSecondary,
+    type && type === 'primary' && styles.textPrimary,
   ];
 
   return (
-    <TouchableHighlight style={buttonStyle} underlayColor='#0ccccb' {...props}>
+    <TouchableHighlight
+      style={buttonStyle}
+      underlayColor={type === 'primary' ? '#d42d4e' : '#0ccccb'}
+      {...props}
+    >
       <Text style={childrenStyle}>{children}</Text>
     </TouchableHighlight>
   );
