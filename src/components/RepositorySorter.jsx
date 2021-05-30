@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
   picker: {
     color: '#fff',
     marginHorizontal: 10,
+    marginBottom: 5,
   },
 });
 
