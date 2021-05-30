@@ -36,15 +36,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReviewItem = ({ review }) => {
+const ReviewItem = ({ review, myReview }) => {
   const { user, createdAt, text, rating } = { ...review };
+
   return (
     <View style={styles.card}>
       <View style={styles.top}>
         <RatingCircle rating={rating} style={styles.profilePicture} />
         <View style={styles.topInfo}>
           <Text fontWeight='bold' style={styles.username}>
-            {user.username}
+            {myReview
+              ? `${review.repository.ownerName}/${review.repository.name}`
+              : user.username}
           </Text>
           <Text style={styles.info} color='textSecondary'>
             {moment(createdAt).format('DD/MM/YYYY HH:mm a')}
