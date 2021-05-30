@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, View, StyleSheet } from 'react-native';
 import { Link } from 'react-router-native';
 import { Searchbar } from 'react-native-paper';
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     height: 10,
   },
   search: {
-    marginHorizontal: 10,
+    marginHorizontal: 15,
     marginTop: 15,
     marginBottom: 5,
     backgroundColor: theme.colors.background,
@@ -57,12 +57,15 @@ export class RepositoryListContainer extends React.Component {
   };
 
   render() {
+    const { repositories, onEndReach } = this.props;
     return (
       <FlatList
         ListHeaderComponent={this.renderHeader()}
-        data={this.props.repositories}
+        data={repositories}
         renderItem={FlatlistItem}
         ItemSeparatorComponent={ItemSeparator}
+        onEndReached={onEndReach}
+        onEndReachedThreshold={0.5}
       />
     );
   }
@@ -73,11 +76,25 @@ const RepositoryList = () => {
   const [search, setSearch] = useState('');
   const [debouncedSearch] = useDebounce(search, 500);
 
-  const { repositories } = useRepositories(sortMode, debouncedSearch);
+  const { fetchData, repositories, fetchMore } = useRepositories(
+    sortMode,
+    debouncedSearch
+  );
+
+  // Needed for the workaround to this issue
+  // https://github.com/apollographql/apollo-client/issues/6816#issuecomment-696988617
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const repositoryNodes = repositories
     ? repositories.edges.map((edge) => edge.node)
     : [];
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   return (
     <RepositoryListContainer
@@ -86,6 +103,7 @@ const RepositoryList = () => {
       setSortMode={setSortMode}
       search={search}
       setSearch={setSearch}
+      onEndReach={onEndReach}
     />
   );
 };

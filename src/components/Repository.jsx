@@ -1,14 +1,13 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
 import { useParams } from 'react-router-native';
 import * as Linking from 'expo-linking';
 
-import { GET_REPOSITORY } from '../graphql/queries';
 import RepositoryItem from './RepositoryItem';
 import theme from '../theme';
 import Button from './Button';
 import ReviewItem from './ReviewItem';
+import useRepository from '../hooks/useRepository';
 
 const { colors } = theme;
 
@@ -53,12 +52,20 @@ const ItemSeparator = () => <View style={styles.separator} />;
 const Repository = () => {
   const { id } = useParams();
 
-  const { data } = useQuery(GET_REPOSITORY, {
-    variables: { id },
-    fetchPolicy: 'cache-and-network',
-  });
-  const { repository } = { ...data };
+  const { fetchData, repository, fetchMore } = useRepository(id);
+
+  // Needed for the workaround to this issue
+  // https://github.com/apollographql/apollo-client/issues/6816#issuecomment-696988617
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const { reviews } = { ...repository };
+
+  const onEndReach = () => {
+    fetchMore();
+  };
 
   const reviewsEdges = reviews ? reviews.edges.map((e) => e.node) : [];
 
@@ -69,6 +76,8 @@ const Repository = () => {
       keyExtractor={({ id }) => id}
       ItemSeparatorComponent={ItemSeparator}
       ListHeaderComponent={() => <RepositoryInfo repository={repository} />}
+      onEndReached={onEndReach}
+      onEndReachedThreshold={0.1}
     />
   );
 };

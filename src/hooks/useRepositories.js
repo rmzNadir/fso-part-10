@@ -1,4 +1,4 @@
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import { GET_REPOSITORIES } from '../graphql/queries';
 
 const useRepositories = (sortMode, searchKeyword) => {
@@ -9,17 +9,45 @@ const useRepositories = (sortMode, searchKeyword) => {
     order = sortMode === 'CREATEDAT' ? 'DESC' : sortMode.split('-')[1];
   }
 
-  const { data, refetch, loading } = useQuery(GET_REPOSITORIES, {
-    variables: {
-      orderBy: method,
-      orderDirection: order,
-      searchKeyword: searchKeyword,
-    },
-    fetchPolicy: 'cache-and-network',
-  });
+  const variables = {
+    orderBy: method,
+    orderDirection: order,
+    searchKeyword: searchKeyword,
+    first: 5,
+  };
+  // Had to use lazy query cuz of this issue
+  // https://github.com/apollographql/apollo-client/issues/6816#issuecomment-696988617
+  const [fetchData, { data, fetchMore, loading, result }] = useLazyQuery(
+    GET_REPOSITORIES,
+    {
+      variables,
+      fetchPolicy: 'cache-and-network',
+    }
+  );
   const { repositories } = { ...data };
-  console.log('repositories', repositories);
-  return { repositories, loading, refetch: refetch };
+
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && repositories.pageInfo.hasNextPage;
+
+    if (!canFetchMore) {
+      return;
+    }
+
+    fetchMore({
+      variables: {
+        after: data.repositories.pageInfo.endCursor,
+        ...variables,
+      },
+    });
+  };
+
+  return {
+    fetchData,
+    repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    ...result,
+  };
 };
 
 export default useRepositories;
